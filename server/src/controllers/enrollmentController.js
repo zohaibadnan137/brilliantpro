@@ -1,16 +1,16 @@
-const enrollment = require("../models/enrollmentModel");
+const enrollmentModel = require("../models/enrollmentModel");
 
 // Create a new enrollment
 const createEnrollment = async (req, res) => {
   try {
     const { learnerId, courseId } = req.body;
-    const enrollment = new enrollment({
+    const enrollment = new enrollmentModel({
       learnerId: learnerId,
       courseId: courseId,
       completed: false,
     });
 
-    await enrollment.save();
+    await enrollmentModel.save();
     res
       .status(201)
       .json({ message: "Enrollment created successfully.", enrollment });
@@ -25,10 +25,12 @@ const createEnrollment = async (req, res) => {
 // Get all enrollments
 const getAllEnrollments = async (req, res) => {
   try {
-    const enrollments = await enrollment.find();
+    const enrollments = await enrollmentModel.find();
     res
       .status(200)
       .json({ message: "All enrollments found successfully.", enrollments });
+
+    return enrollments;
   } catch (error) {
     console.error(error);
     res
@@ -41,7 +43,7 @@ const getAllEnrollments = async (req, res) => {
 const getAllEnrollmentsForLearner = async (req, res) => {
   try {
     const learnerId = req.params.id;
-    const enrollments = await enrollment.find({ learnerId: learnerId });
+    const enrollments = await enrollmentModel.find({ learnerId: learnerId });
     res.status(200).json({
       message: "All enrollments for learner found successfully.",
       enrollments,
@@ -58,7 +60,7 @@ const getAllEnrollmentsForLearner = async (req, res) => {
 const getAllEnrollmentsForCourse = async (req, res) => {
   try {
     const courseId = req.params.id;
-    const enrollments = await enrollment.find({ courseId: courseId });
+    const enrollments = await enrollmentModel.find({ courseId: courseId });
     res.status(200).json({
       message: "All enrollments for course found successfully.",
       enrollments,
@@ -75,7 +77,7 @@ const getAllEnrollmentsForCourse = async (req, res) => {
 const getEnrollmentById = async (req, res) => {
   try {
     const enrollmentId = req.params.id;
-    const enrollment = await enrollment.findById(enrollmentId);
+    const enrollment = await enrollmentModel.findById(enrollmentId);
     if (enrollment) {
       res
         .status(200)
@@ -96,7 +98,7 @@ const updateEnrollmentById = async (req, res) => {
   try {
     const enrollmentId = req.params.id;
     const { completed } = req.body;
-    const enrollment = await enrollment.findById(enrollmentId);
+    const enrollment = await enrollmentModel.findById(enrollmentId);
     if (enrollment) {
       enrollment.completed = completed;
       await enrollment.save();
@@ -119,7 +121,7 @@ const updateEnrollmentById = async (req, res) => {
 const deleteEnrollmentById = async (req, res) => {
   try {
     const enrollmentId = req.params.id;
-    const enrollment = await enrollment.findById(enrollmentId);
+    const enrollment = await enrollmentModel.findById(enrollmentId);
     if (enrollment) {
       await enrollment.remove();
       res.status(200).json({

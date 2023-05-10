@@ -1,17 +1,17 @@
-const material = require("../models/materialModel");
+const materialModel = require("../models/materialModel");
 
 // Create a new material
 const createMaterial = async (req, res) => {
   try {
     const { courseId, name, type, file } = req.body;
-    const material = new material({
+    const material = new materialModel({
       courseId: courseId,
       name: name,
       type: type,
       file: file,
     });
 
-    await material.save();
+    await materialModel.save();
     res
       .status(201)
       .json({ message: "Material created successfully.", material });
@@ -24,7 +24,7 @@ const createMaterial = async (req, res) => {
 // Get all materials
 const getAllMaterials = async (req, res) => {
   try {
-    const materials = await material.find();
+    const materials = await materialModel.find();
     res
       .status(200)
       .json({ message: "All materials found successfully.", materials });
@@ -40,7 +40,7 @@ const getAllMaterials = async (req, res) => {
 const getAllMaterialsForCourse = async (req, res) => {
   try {
     const courseId = req.params.id;
-    const materials = await material.find({ courseId: courseId });
+    const materials = await materialModel.find({ courseId: courseId });
     res.status(200).json({
       message: "All materials for course found successfully.",
       materials,
@@ -57,7 +57,7 @@ const getAllMaterialsForCourse = async (req, res) => {
 const getMaterialById = async (req, res) => {
   try {
     const materialId = req.params.id;
-    const material = await material.findById(materialId);
+    const material = await materialModel.findById(materialId);
     res.status(200).json({ message: "Material found successfully.", material });
   } catch (error) {
     console.error(error);
@@ -70,7 +70,7 @@ const updateMaterialById = async (req, res) => {
   try {
     const materialId = req.params.id;
     const { courseId, name, type, file } = req.body;
-    const material = await material.findByIdAndUpdate(materialId, {
+    const material = await materialModel.findByIdAndUpdate(materialId, {
       courseId: courseId,
       name: name,
       type: type,
@@ -89,7 +89,7 @@ const updateMaterialById = async (req, res) => {
 const deleteMaterialById = async (req, res) => {
   try {
     const materialId = req.params.id;
-    const material = await material.findByIdAndDelete(materialId);
+    const material = await materialModel.findByIdAndDelete(materialId);
     res
       .status(200)
       .json({ message: "Material deleted successfully.", material });

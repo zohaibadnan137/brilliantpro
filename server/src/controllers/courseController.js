@@ -1,4 +1,4 @@
-const course = require("../models/courseModel");
+const courseModel = require("../models/courseModel");
 
 // Create a new course
 const createCourse = async (req, res) => {
@@ -12,7 +12,7 @@ const createCourse = async (req, res) => {
       deadline,
       enrollmentLink,
     } = req.body;
-    const course = new course({
+    const course = new courseModel({
       title: title,
       overview: overview,
       description: description,
@@ -22,7 +22,7 @@ const createCourse = async (req, res) => {
       enrollmentLink: enrollmentLink,
     });
 
-    await course.save();
+    await courseModel.save();
     res.status(201).json({ message: "Course created successfully.", course });
   } catch (error) {
     console.error(error);
@@ -33,7 +33,7 @@ const createCourse = async (req, res) => {
 // Get all courses
 const getAllCourses = async (req, res) => {
   try {
-    const courses = await course.find();
+    const courses = await courseModel.find();
     res
       .status(200)
       .json({ message: "All courses found successfully.", courses });
@@ -49,7 +49,7 @@ const getAllCourses = async (req, res) => {
 const getCourseById = async (req, res) => {
   try {
     const courseId = req.params.id;
-    const course = await course.findById(courseId);
+    const course = await courseModel.findById(courseId);
     if (course) {
       res.status(200).json({ message: "Course found successfully.", course });
     } else {
@@ -76,7 +76,7 @@ const updateCourseById = async (req, res) => {
       deadline,
       enrollmentLink,
     } = req.body;
-    const course = await course.findByIdAndUpdate(courseId, {
+    const course = await courseModel.findByIdAndUpdate(courseId, {
       title: title,
       overview: overview,
       description: description,
@@ -98,7 +98,7 @@ const updateCourseById = async (req, res) => {
 const deleteCourseById = async (req, res) => {
   try {
     const courseId = req.params.id;
-    const course = await course.findByIdAndDelete(courseId);
+    const course = await courseModel.findByIdAndDelete(courseId);
     res.status(200).json({ message: "Course deleted successfully.", course });
   } catch (error) {
     console.error(error);

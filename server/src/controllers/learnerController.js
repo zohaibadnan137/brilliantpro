@@ -1,17 +1,17 @@
-const learner = require("../models/learnerModel");
+const learnerModel = require("../models/learnerModel");
 
 // Create a new learner
 const createLearner = async (req, res) => {
   try {
     const { name, image, email, password } = req.body;
-    const learner = new learner({
+    const learner = new learnerModel({
       name: name,
       image: image,
       email: email,
       password: password,
       role: "learner",
     });
-    await learner.save();
+    await learnerModel.save();
     res.status(201).json({ message: "Learner created successfully.", learner });
   } catch (error) {
     console.error(error);
@@ -22,7 +22,7 @@ const createLearner = async (req, res) => {
 // Get all learners
 const getAllLearners = async (req, res) => {
   try {
-    const learners = await learner.find();
+    const learners = await learnerModel.find();
     res
       .status(200)
       .json({ message: "All learners found successfully .", learners });
@@ -38,7 +38,7 @@ const getAllLearners = async (req, res) => {
 const getLearnerById = async (req, res) => {
   try {
     const learnerId = req.params.id;
-    const learner = await learner.findById(learnerId);
+    const learner = await learnerModel.findById(learnerId);
     if (learner) {
       res.status(200).json({ message: "Learner found successfully.", learner });
     } else {
@@ -57,7 +57,7 @@ const updateLearnerById = async (req, res) => {
   try {
     const learnerId = req.params.id;
     const { name, image, email, password } = req.body;
-    const learner = await learner.findByIdAndUpdate(learnerId, {
+    const learner = await learnerModel.findByIdAndUpdate(learnerId, {
       name,
       image,
       email,
@@ -82,7 +82,7 @@ const updateLearnerById = async (req, res) => {
 const deleteLearnerById = async (req, res) => {
   try {
     const learnerId = req.params.id;
-    const learner = await learner.findByIdAndDelete(learnerId);
+    const learner = await learnerModel.findByIdAndDelete(learnerId);
     if (learner) {
       res
         .status(200)
@@ -102,5 +102,6 @@ module.exports = {
   createLearner,
   getAllLearners,
   getLearnerById,
+  updateLearnerById,
   deleteLearnerById,
 };
