@@ -136,3 +136,13 @@ const deleteEnrollmentById = async (req, res) => {
       .json({ message: "Server error while deleting enrollment by id." });
   }
 };
+
+module.exports = {
+  createEnrollment,
+  getAllEnrollments,
+  getAllEnrollmentsForLearner,
+  getAllEnrollmentsForCourse,
+  getEnrollmentById,
+  updateEnrollmentById,
+  deleteEnrollmentById,
+};
