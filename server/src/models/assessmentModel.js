@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const assessmentSchema = new mongoose.Schema({
+  courseId: { type: mongoose.Schema.Types.ObjectId, ref: "course" },
   name: { type: String, required: true },
   timeLimit: { type: Number },
   passingScore: { type: Number },
@@ -13,4 +14,4 @@ const assessmentSchema = new mongoose.Schema({
   ],
 });
 
-const Assessment = mongoose.model("Assessment", assessmentSchema);
+const assessment = mongoose.model("assessment", assessmentSchema);

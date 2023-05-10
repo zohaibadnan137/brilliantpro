@@ -2,14 +2,13 @@ const mongoose = require("mongoose");
 
 const learnerSchema = new mongoose.Schema({
   name: { type: String, required: true },
+  image: {
+    type: String,
+    default: "https://bulma.io/images/placeholders/128x128.png",
+  },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  courses: [
-    {
-      course: { type: mongoose.Schema.Types.ObjectId, ref: "Course" },
-      progress: { type: Number, default: 0 },
-    },
-  ],
+  role: "learner",
 });
 
-const Learner = mongoose.model("Learner", learnerSchema);
+const learner = mongoose.model("learner", learnerSchema);
