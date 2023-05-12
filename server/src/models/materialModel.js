@@ -7,4 +7,5 @@ const materialSchema = new mongoose.Schema({
   file: { type: String },
 });
 
-const material = mongoose.model("material", materialSchema);
+const material = mongoose.model("materials", materialSchema);
+module.exports = material;
