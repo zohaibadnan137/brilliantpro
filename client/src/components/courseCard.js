@@ -10,17 +10,17 @@ function CourseCard(props) {
   const [course, setCourse] = useState({
     title: props.title || "Course title",
     overview: props.overview || "Course overview",
-    image: props.image || "https://bulma.io/images/placeholders/1280x960.png",
     description: props.description || "Course description",
+    image: props.image || "https://bulma.io/images/placeholders/1280x960.png",
   });
 
   const handleCourseClick = () => {
-    props.onCourseClick(course);
+    props.onCourseClick(props, props.enrolled);
   };
 
   return (
     <div className="courseCard" onClick={handleCourseClick}>
-      <Link to="/course-details">
+      <Link to="/dashboard/course-details">
         <div className="card">
           <div className="card-image">
             <figure className="image is-4by3">

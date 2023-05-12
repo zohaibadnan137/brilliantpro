@@ -1,29 +1,62 @@
-import useState from "react";
+// React
+import { useState } from "react";
+import { NavLink } from "react-router-dom";
+
+// Styles
 import "bulma/css/bulma.min.css";
+import "../styles/sidebar.css";
 
 function Sidebar() {
+  const [role, setRole] = useState(localStorage.getItem("role") || "learner");
+
   return (
     <div className="sidebar">
       <aside className="menu ml-4 mt-4">
         <p className="menu-label">General</p>
         <ul className="menu-list">
           <li>
-            <a className="is-active">Dashboard</a>
+            <NavLink
+              end
+              to="/dashboard"
+              className={({ isActive }) => (isActive ? "is-active" : "")}
+            >
+              Dashboard
+            </NavLink>
           </li>
           <li>
-            <a>My Profile</a>
+            <NavLink
+              to="/dashboard/my-profile"
+              className={({ isActive }) => (isActive ? "is-active" : "")}
+            >
+              My Profile
+            </NavLink>
           </li>
           <li>
-            <a>Settings</a>
+            <NavLink
+              to="/dashboard/settings"
+              className={({ isActive }) => (isActive ? "is-active" : "")}
+            >
+              Settings
+            </NavLink>
           </li>
         </ul>
         <p className="menu-label">Courses</p>
         <ul className="menu-list">
           <li>
-            <a>My Courses</a>
+            <NavLink
+              to="/dashboard/my-courses"
+              className={({ isActive }) => (isActive ? "is-active" : "")}
+            >
+              My Courses
+            </NavLink>
           </li>
           <li>
-            <a>Enroll</a>
+            <NavLink
+              to="/dashboard/enroll"
+              className={({ isActive }) => (isActive ? "is-active" : "")}
+            >
+              Enroll
+            </NavLink>
           </li>
         </ul>
       </aside>

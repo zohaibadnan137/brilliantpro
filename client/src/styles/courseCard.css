@@ -1,4 +1,4 @@
-.card-content .content {
+.courseCard .card-content .content {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3; /* set the number of lines to display */

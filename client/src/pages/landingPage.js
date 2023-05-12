@@ -1,10 +1,10 @@
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "bulma/css/bulma.min.css";
 
 function LandingPage() {
   return (
     <div className="landingPage">
-      <section className="hero is-primary is-fullheight">
+      <section className="hero is-link is-fullheight">
         <div className="hero-body">
           <div className="container">
             <h1 className="title">Welcome to BrilliantPro!</h1>
