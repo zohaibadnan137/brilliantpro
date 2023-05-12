@@ -10,11 +10,11 @@ router.get("/", (req, res) => {
 // Get all available courses
 router.get("/all", courses.getAllCourses);
 
+// Create a new course
+router.post("/", courses.createCourse);
+
 // Get a course by id
 router.get("/:id", courses.getCourseById);
-
-// Create a new course
-router.post("/create", courses.createCourse);
 
 // Update a course by id
 router.put("/:id", courses.updateCourseById);

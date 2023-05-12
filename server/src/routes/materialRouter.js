@@ -10,11 +10,11 @@ router.get("/", (req, res) => {
 // Get all available materials
 router.get("/all", material.getAllMaterials);
 
+// Create a new material
+router.post("/", material.createMaterial);
+
 // Get a material by id
 router.get("/:id", material.getMaterialById);
-
-// Create a new material
-router.post("/create", material.createMaterial);
 
 // Update a material by id
 router.put("/:id", material.updateMaterialById);

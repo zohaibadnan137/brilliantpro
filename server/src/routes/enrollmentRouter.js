@@ -10,11 +10,11 @@ router.get("/", (req, res) => {
 // Get all available enrollments
 router.get("/all", enrollment.getAllEnrollments);
 
+// Create a new enrollment
+router.post("/", enrollment.createEnrollment);
+
 // Get an enrollment by id
 router.get("/:id", enrollment.getEnrollmentById);
-
-// Create a new enrollment
-router.post("/create", enrollment.createEnrollment);
 
 // Update an enrollment by id
 router.put("/:id", enrollment.updateEnrollmentById);
