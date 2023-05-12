@@ -15,7 +15,7 @@ const getLearnerEnrolledCourses = async (req, res) => {
     }
     res.status(200).json({
       message: "Courses that learner is enrolled in found successfully.",
-      learnerEnrolledCourses,
+      data: learnerEnrolledCourses,
     });
   } catch (error) {
     console.error(error);
@@ -33,18 +33,15 @@ const getLearnerNotEnrolledCourses = async (req, res) => {
     const learnerEnrollments = await enrollmentModel.find({
       learnerId: learnerId,
     });
-    const learnerEnrolledCourses = [];
-    for (let i = 0; i < learnerEnrollments.length; i++) {
-      const course = await courseModel.findById(learnerEnrollments[i].courseId);
-      learnerEnrolledCourses.push(course);
-    }
-    const allCourses = await courseModel.find();
-    const learnerNotEnrolledCourses = allCourses.filter(
-      (course) => !learnerEnrolledCourses.includes(course)
+    const learnerEnrolledCourseIds = learnerEnrollments.map(
+      (enrollment) => enrollment.courseId
     );
+    const learnerNotEnrolledCourses = await courseModel.find({
+      _id: { $nin: learnerEnrolledCourseIds },
+    });
     res.status(200).json({
       message: "Courses that learner is not enrolled in found successfully.",
-      learnerNotEnrolledCourses,
+      data: learnerNotEnrolledCourses,
     });
   } catch (error) {
     console.error(error);
