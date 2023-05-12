@@ -36,7 +36,7 @@ const getAllCourses = async (req, res) => {
     const courses = await courseModel.find();
     res
       .status(200)
-      .json({ message: "All courses found successfully.", courses });
+      .json({ message: "All courses found successfully.", data: courses });
   } catch (error) {
     console.error(error);
     res
@@ -51,7 +51,9 @@ const getCourseById = async (req, res) => {
     const courseId = req.params.id;
     const course = await courseModel.findById(courseId);
     if (course) {
-      res.status(200).json({ message: "Course found successfully.", course });
+      res
+        .status(200)
+        .json({ message: "Course found successfully.", data: course });
     } else {
       res.status(404).json({ message: "Course not found." });
     }
@@ -85,7 +87,9 @@ const updateCourseById = async (req, res) => {
       deadline: deadline,
       enrollmentLink: enrollmentLink,
     });
-    res.status(200).json({ message: "Course updated successfully.", course });
+    res
+      .status(200)
+      .json({ message: "Course updated successfully.", data: course });
   } catch (error) {
     console.error(error);
     res
@@ -99,7 +103,9 @@ const deleteCourseById = async (req, res) => {
   try {
     const courseId = req.params.id;
     const course = await courseModel.findByIdAndDelete(courseId);
-    res.status(200).json({ message: "Course deleted successfully.", course });
+    res
+      .status(200)
+      .json({ message: "Course deleted successfully.", data: course });
   } catch (error) {
     console.error(error);
     res

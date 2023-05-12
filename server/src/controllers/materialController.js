@@ -14,7 +14,7 @@ const createMaterial = async (req, res) => {
     await materialModel.save();
     res
       .status(201)
-      .json({ message: "Material created successfully.", material });
+      .json({ message: "Material created successfully.", data: material });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error while creating material." });
@@ -27,7 +27,7 @@ const getAllMaterials = async (req, res) => {
     const materials = await materialModel.find();
     res
       .status(200)
-      .json({ message: "All materials found successfully.", materials });
+      .json({ message: "All materials found successfully.", data: materials });
   } catch (error) {
     console.error(error);
     res
@@ -43,7 +43,7 @@ const getAllMaterialsForCourse = async (req, res) => {
     const materials = await materialModel.find({ courseId: courseId });
     res.status(200).json({
       message: "All materials for course found successfully.",
-      materials,
+      data: materials,
     });
   } catch (error) {
     console.error(error);
@@ -58,7 +58,9 @@ const getMaterialById = async (req, res) => {
   try {
     const materialId = req.params.id;
     const material = await materialModel.findById(materialId);
-    res.status(200).json({ message: "Material found successfully.", material });
+    res
+      .status(200)
+      .json({ message: "Material found successfully.", data: material });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error while getting material." });
@@ -78,7 +80,7 @@ const updateMaterialById = async (req, res) => {
     });
     res
       .status(200)
-      .json({ message: "Material updated successfully.", material });
+      .json({ message: "Material updated successfully.", data: material });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error while updating material." });
@@ -92,7 +94,7 @@ const deleteMaterialById = async (req, res) => {
     const material = await materialModel.findByIdAndDelete(materialId);
     res
       .status(200)
-      .json({ message: "Material deleted successfully.", material });
+      .json({ message: "Material deleted successfully.", data: material });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error while deleting material." });

@@ -10,10 +10,10 @@ const createEnrollment = async (req, res) => {
       completed: false,
     });
 
-    await enrollmentModel.save();
+    await enrollment.save();
     res
       .status(201)
-      .json({ message: "Enrollment created successfully.", enrollment });
+      .json({ message: "Enrollment created successfully.", data: enrollment });
   } catch (error) {
     console.error(error);
     res
@@ -26,9 +26,10 @@ const createEnrollment = async (req, res) => {
 const getAllEnrollments = async (req, res) => {
   try {
     const enrollments = await enrollmentModel.find();
-    res
-      .status(200)
-      .json({ message: "All enrollments found successfully.", enrollments });
+    res.status(200).json({
+      message: "All enrollments found successfully.",
+      data: enrollments,
+    });
 
     return enrollments;
   } catch (error) {
@@ -46,7 +47,7 @@ const getAllEnrollmentsForLearner = async (req, res) => {
     const enrollments = await enrollmentModel.find({ learnerId: learnerId });
     res.status(200).json({
       message: "All enrollments for learner found successfully.",
-      enrollments,
+      data: enrollments,
     });
   } catch (error) {
     console.error(error);
@@ -63,7 +64,7 @@ const getAllEnrollmentsForCourse = async (req, res) => {
     const enrollments = await enrollmentModel.find({ courseId: courseId });
     res.status(200).json({
       message: "All enrollments for course found successfully.",
-      enrollments,
+      data: enrollments,
     });
   } catch (error) {
     console.error(error);
@@ -81,7 +82,7 @@ const getEnrollmentById = async (req, res) => {
     if (enrollment) {
       res
         .status(200)
-        .json({ message: "Enrollment found successfully.", enrollment });
+        .json({ message: "Enrollment found successfully.", data: enrollment });
     } else {
       res.status(404).json({ message: "Enrollment not found." });
     }
@@ -104,7 +105,7 @@ const updateEnrollmentById = async (req, res) => {
       await enrollment.save();
       res.status(200).json({
         message: "Enrollment updated successfully.",
-        enrollment,
+        data: enrollment,
       });
     } else {
       res.status(404).json({ message: "Enrollment not found." });
@@ -126,7 +127,7 @@ const deleteEnrollmentById = async (req, res) => {
       await enrollment.remove();
       res.status(200).json({
         message: "Enrollment deleted successfully.",
-        enrollment,
+        data: enrollment,
       });
     } else {
       res.status(404).json({ message: "Enrollment not found." });
