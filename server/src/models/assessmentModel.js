@@ -14,4 +14,5 @@ const assessmentSchema = new mongoose.Schema({
   ],
 });
 
-const assessment = mongoose.model("assessment", assessmentSchema);
+const assessment = mongoose.model("assessments", assessmentSchema);
+module.exports = assessment;

@@ -8,7 +8,8 @@ const learnerSchema = new mongoose.Schema({
   },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  role: "learner",
+  role: { type: String, default: "learner" },
 });
 
-const learner = mongoose.model("learner", learnerSchema);
+const learner = mongoose.model("learners", learnerSchema);
+module.exports = learner;

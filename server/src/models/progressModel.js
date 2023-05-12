@@ -11,3 +11,4 @@ const progressSchema = new mongoose.Schema({
 });
 
 const progress = mongoose.model("progress", progressSchema);
+moduke.exports = progress;

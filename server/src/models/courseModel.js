@@ -17,4 +17,5 @@ const courseSchema = new mongoose.Schema({
   enrollmentLink: { type: String },
 });
 
-const course = mongoose.model("course", courseSchema);
+const course = mongoose.model("courses", courseSchema);
+module.exports = course;

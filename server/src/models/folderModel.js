@@ -5,4 +5,5 @@ const folderSchema = new mongoose.Schema({
   materials: [{ type: mongoose.Schema.Types.ObjectId, ref: "material" }],
 });
 
-const Folder = mongoose.model("Folder", folderSchema);
+const folder = mongoose.model("folders", folderSchema);
+module.exports = folder;
