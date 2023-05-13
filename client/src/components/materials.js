@@ -28,7 +28,7 @@ function Materials(props) {
         console.error(error);
       }
     },
-    []
+    [course._id]
   );
 
   return (

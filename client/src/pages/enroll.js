@@ -27,7 +27,7 @@ function Enroll(props) {
         console.error(error);
       }
     },
-    []
+    [learner._id]
   );
 
   return (

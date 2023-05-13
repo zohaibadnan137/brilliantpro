@@ -5,9 +5,7 @@ import { useState } from "react";
 import "bulma/css/bulma.min.css";
 
 function Syllabus(props) {
-  const [syllabus, setSyllabus] = useState(
-    props.syllabus || ["Course syllabus"]
-  );
+  const [syllabus] = useState(props.syllabus || ["Course syllabus"]);
 
   return (
     <div className="syllabus">

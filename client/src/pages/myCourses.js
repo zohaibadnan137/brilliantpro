@@ -27,7 +27,7 @@ function MyCourses(props) {
         console.error(error);
       }
     },
-    []
+    [learner._id]
   );
 
   return (

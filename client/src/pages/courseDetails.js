@@ -83,7 +83,7 @@ function CourseDetails(props) {
       <div className="box">
         <div className="columns">
           <div className="column is-half">
-            <img src={course.image} alt="Course image" />
+            <img src={course.image} alt="Course" />
           </div>
           <div className="column mt-3 mr-6">
             <p className="title is-2 mt-3">{course.title}</p>
