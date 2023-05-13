@@ -7,7 +7,7 @@ import "bulma/css/bulma.min.css";
 import "../styles/courseCard.css";
 
 function CourseCard(props) {
-  const [course, setCourse] = useState({
+  const [course] = useState({
     title: props.title || "Course title",
     overview: props.overview || "Course overview",
     description: props.description || "Course description",
@@ -24,7 +24,7 @@ function CourseCard(props) {
         <div className="card">
           <div className="card-image">
             <figure className="image is-4by3">
-              <img src={course.image} alt="Course image" />
+              <img src={course.image} alt="Course" />
             </figure>
           </div>
 

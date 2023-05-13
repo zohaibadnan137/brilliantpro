@@ -278,7 +278,7 @@ function ManageCourses() {
                 <div className="control">
                   <img
                     src={selectedCourse.image}
-                    alt="Course Image"
+                    alt="Course"
                     style={{ maxWidth: "500px", height: "auto" }}
                   />
                 </div>

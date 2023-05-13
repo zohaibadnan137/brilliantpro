@@ -75,6 +75,7 @@ function MyProfile() {
                   user.image ||
                   "https://bulma.io/images/placeholders/128x128.png"
                 }
+                alt="Profile"
               />
             </figure>
           </div>
