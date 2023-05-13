@@ -7,6 +7,7 @@ import {
   Navigate,
 } from "react-router-dom";
 
+// Components
 import LandingPage from "./pages/landingPage";
 import LoginPage from "./pages/loginPage";
 import SignupPage from "./pages/signupPage";
@@ -16,20 +17,21 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    // Check whether the learner object is in local storage
-    const learner = JSON.parse(localStorage.getItem("learner"));
-    if (learner) setIsLoggedIn(true);
+    // Check whether the user object is in local storage
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) setIsLoggedIn(true);
   }, []);
 
   useEffect(() => {
+    // Listen for the login event
     window.addEventListener("login", () => {
-      // Check whether the learner object is in local storage
-      const learner = JSON.parse(localStorage.getItem("learner"));
-      if (learner) setIsLoggedIn(true);
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (user) setIsLoggedIn(true);
     });
   });
 
   useEffect(() => {
+    // Listen for the logout event
     window.addEventListener("logout", () => {
       setIsLoggedIn(false);
     });

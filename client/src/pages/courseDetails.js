@@ -10,7 +10,7 @@ import Materials from "../components/materials";
 import Assessments from "../components/assessments";
 
 function CourseDetails(props) {
-  const [course, setCourse] = useState({
+  const [course] = useState({
     _id: props._id,
     title: props.title || "Course title",
     overview: props.overview || "Course overview",
@@ -48,7 +48,7 @@ function CourseDetails(props) {
 
     // Create a new enrollment
     // Get the learner's ID from the local storage
-    const learnerId = JSON.parse(localStorage.getItem("learner"))._id;
+    const learnerId = JSON.parse(localStorage.getItem("user"))._id;
 
     const enrollment = {
       learnerId: learnerId,
@@ -65,16 +65,15 @@ function CourseDetails(props) {
         body: JSON.stringify(enrollment),
       });
       if (response.ok) {
-        const data = await response.json();
         setIsEnrolling(false);
         setEnrollmentProgress(100);
-
         setEnrolled("true");
+        alert("Enrolled successfully!");
       }
     } catch (error) {
       setIsEnrolling(false);
       setEnrollmentProgress(0);
-
+      alert("Something went wrong! Please try again.");
       console.error(error);
     }
   };

@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import "bulma/css/bulma.min.css";
 
 function Greeting() {
-  const [learner] = useState(JSON.parse(localStorage.getItem("learner")));
+  const [user] = useState(JSON.parse(localStorage.getItem("user")));
   const [greeting, setGreeting] = useState("");
 
   useEffect(() => {
@@ -19,14 +19,26 @@ function Greeting() {
     }
   }, []);
 
-  return (
-    <div className="greeting">
-      <h1 className="title has-text-link">
-        {greeting}, {learner.name}!
-      </h1>
-      <h2 className="subtitle">What would you like to learn today?</h2>
-    </div>
-  );
+  // Greering for learners
+  if (user.role === "learner")
+    return (
+      <div className="greeting">
+        <h1 className="title has-text-link">
+          {greeting}, {user.name}!
+        </h1>
+        <h2 className="subtitle">What would you like to learn today?</h2>
+      </div>
+    );
+  // Greering for admins
+  else
+    return (
+      <div className="greeting">
+        <h1 className="title has-text-link">
+          {greeting}, {user.name}!
+        </h1>
+        <h2 className="subtitle">What would you like to do today?</h2>
+      </div>
+    );
 }
 
 export default Greeting;

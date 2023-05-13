@@ -5,7 +5,7 @@ import { faEdit } from "@fortawesome/free-solid-svg-icons";
 
 function MyProfile() {
   const [user, setUser] = useState(
-    JSON.parse(localStorage.getItem("learner")) || {}
+    JSON.parse(localStorage.getItem("user")) || {}
   );
 
   // These are used when the user wants to edit their profile
@@ -15,7 +15,7 @@ function MyProfile() {
   const [newEmail, setNewEmail] = useState("");
 
   const handleSignOut = () => {
-    localStorage.removeItem("learner");
+    localStorage.removeItem("user");
     window.dispatchEvent(new Event("logout"));
   };
 
@@ -44,7 +44,7 @@ function MyProfile() {
       );
       if (response.ok) {
         const data = await response.json();
-        localStorage.setItem("learner", JSON.stringify(data.data));
+        localStorage.setItem("user", JSON.stringify(data.data));
         setUser(data.data);
         alert("Profile updated!");
         setIsModalOpen(false);
@@ -64,17 +64,17 @@ function MyProfile() {
     <div className="myProfile">
       <div className="container">
         <div className="box">
-          <button
-            className="button is-is-grey-lighter"
-            onClick={handleEditClick}
-          >
+          <button className="button is-grey-lighter" onClick={handleEditClick}>
             <FontAwesomeIcon icon={faEdit} />
           </button>
           <div className="profile-image has-text-centered">
             <figure className="image is-128x128 is-inline-block">
               <img
                 className="is-rounded"
-                src="https://bulma.io/images/placeholders/128x128.png"
+                src={
+                  user.image ||
+                  "https://bulma.io/images/placeholders/128x128.png"
+                }
               />
             </figure>
           </div>

@@ -11,7 +11,7 @@ const createLearner = async (req, res) => {
       password: password,
       role: "learner",
     });
-    await learnerModel.save();
+    await learner.save();
     res
       .status(201)
       .json({ message: "Learner created successfully.", data: learner });

@@ -7,14 +7,12 @@ import "bulma/css/bulma.min.css";
 // Components
 import CourseCard from "../components/courseCard";
 
-// This page will display the courses that the user is enrolled in.
-
+// This page will display the courses that a learner is enrolled in
 function MyCourses(props) {
-  const [learner, setLearner] = useState(
-    JSON.parse(localStorage.getItem("learner"))
-  );
+  const [learner] = useState(JSON.parse(localStorage.getItem("user")));
   const [courses, setCourses] = useState([]);
 
+  // Fetch the courses that the learner is enrolled in
   useEffect(
     () => async () => {
       try {

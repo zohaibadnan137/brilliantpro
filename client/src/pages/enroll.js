@@ -8,13 +8,11 @@ import "bulma/css/bulma.min.css";
 import CourseCard from "../components/courseCard";
 
 // This page will display the courses that the user CAN enroll in
-
 function Enroll(props) {
-  const [learner, setLearner] = useState(
-    JSON.parse(localStorage.getItem("learner"))
-  );
+  const [learner] = useState(JSON.parse(localStorage.getItem("user")));
   const [availableCourses, setAvailableCourses] = useState([]);
 
+  // Fetch the courses that the learner is NOT enrolled in
   useEffect(
     () => async () => {
       try {

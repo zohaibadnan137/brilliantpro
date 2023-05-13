@@ -1,5 +1,8 @@
+// React
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
+// Styles
 import "bulma/css/bulma.min.css";
 
 function LoginPage() {
@@ -8,23 +11,26 @@ function LoginPage() {
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
-    console.log("Login form submitted");
     event.preventDefault();
+
     // Send the login request to the server
-    let response = await fetch("http://localhost:5000/auth/login", {
+    const response = await fetch("http://localhost:5000/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ email, password }),
     });
-    // If the login is successful, save the learner object to local storage
+
+    // If the login is successful, save the user object to local storage
     if (response.ok) {
-      response = await response.json();
-      const learner = response.data;
-      localStorage.setItem("learner", JSON.stringify(learner));
+      const data = await response.json();
+      const user = data.data;
+      localStorage.setItem("user", JSON.stringify(user));
+
       // Create a custom login event
       window.dispatchEvent(new CustomEvent("login"));
+
       // Navigate to the dashboard
       navigate("/dashboard");
     } else {
