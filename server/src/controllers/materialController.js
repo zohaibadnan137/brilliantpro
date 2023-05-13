@@ -11,7 +11,7 @@ const createMaterial = async (req, res) => {
       file: file,
     });
 
-    await materialModel.save();
+    await material.save();
     res
       .status(201)
       .json({ message: "Material created successfully.", data: material });

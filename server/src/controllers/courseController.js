@@ -12,6 +12,7 @@ const createCourse = async (req, res) => {
       deadline,
       enrollmentLink,
     } = req.body;
+
     const course = new courseModel({
       title: title,
       overview: overview,
@@ -21,8 +22,8 @@ const createCourse = async (req, res) => {
       deadline: deadline,
       enrollmentLink: enrollmentLink,
     });
+    await course.save();
 
-    await courseModel.save();
     res.status(201).json({ message: "Course created successfully.", course });
   } catch (error) {
     console.error(error);

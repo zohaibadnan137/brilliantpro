@@ -98,9 +98,11 @@ const getEnrollmentById = async (req, res) => {
 const updateEnrollmentById = async (req, res) => {
   try {
     const enrollmentId = req.params.id;
-    const { completed } = req.body;
+    const { learnerId, courseId, completed } = req.body;
     const enrollment = await enrollmentModel.findById(enrollmentId);
     if (enrollment) {
+      enrollment.learnerId = learnerId;
+      enrollment.courseId = courseId;
       enrollment.completed = completed;
       await enrollment.save();
       res.status(200).json({
@@ -122,9 +124,8 @@ const updateEnrollmentById = async (req, res) => {
 const deleteEnrollmentById = async (req, res) => {
   try {
     const enrollmentId = req.params.id;
-    const enrollment = await enrollmentModel.findById(enrollmentId);
+    const enrollment = await enrollmentModel.findByIdAndDelete(enrollmentId);
     if (enrollment) {
-      await enrollment.remove();
       res.status(200).json({
         message: "Enrollment deleted successfully.",
         data: enrollment,
