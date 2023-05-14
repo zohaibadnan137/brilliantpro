@@ -2,7 +2,7 @@
 BrilliantPro is a learning management system created using the MERN stack. 
 
 ## Try it out!
-Clone the repository on your machine. 
+Clone the repository to your machine. 
 ```
 git clone https://github.com/zohaibadnan137/chatgpt-clone.git
 ```
