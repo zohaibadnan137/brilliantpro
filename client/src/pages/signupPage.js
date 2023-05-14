@@ -26,8 +26,33 @@ function SignupPage() {
         }),
       });
       if (response.ok) {
-        alert("Signup successful! Please login.");
-        navigate("/login");
+        // Extract the user's ID from the response
+        const userId = (await response.json()).data._id;
+
+        // Create an audit log
+        const auditLog = {
+          userId: userId,
+          changeDate: new Date(),
+          entityName: "learner",
+          objectId: userId,
+          fieldName: "N/A",
+          oldValue: "N/A",
+          newValue: "N/A",
+          operationType: "create",
+        };
+        const auditResponse = await fetch("http://localhost:5000/audit", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(auditLog),
+        });
+        if (auditResponse.ok) {
+          alert("Signup successful! Please login.");
+          navigate("/login");
+        } else {
+          alert("Signup failed! Please try again.");
+        }
       } else if (response.status === 409) {
         alert("A learner with that email already exists.");
       } else {

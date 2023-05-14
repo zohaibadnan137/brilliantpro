@@ -65,15 +65,46 @@ function CourseDetails(props) {
         body: JSON.stringify(enrollment),
       });
       if (response.ok) {
+        // Extract the enrollment's ID from the response
+        const enrollmentId = (await response.json()).data._id;
+
+        // Create an audit log
+        const auditLog = {
+          userId: learnerId,
+          changeDate: new Date(),
+          entityName: "enrollment",
+          objectId: enrollmentId,
+          fieldName: "N/A",
+          oldValue: "N/A",
+          newValue: "N/A",
+          operationType: "create",
+        };
+        const auditResponse = await fetch("http://localhost:5000/audit", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(auditLog),
+        });
+        if (auditResponse.ok) {
+          setIsEnrolling(false);
+          setEnrollmentProgress(100);
+          setEnrolled("true");
+          alert("Enrolled successfully!");
+        } else {
+          setIsEnrolling(false);
+          setEnrollmentProgress(0);
+          alert("Something went wrong while enrolling! Please try again.");
+        }
+      } else {
         setIsEnrolling(false);
-        setEnrollmentProgress(100);
-        setEnrolled("true");
-        alert("Enrolled successfully!");
+        setEnrollmentProgress(0);
+        alert("Something went wrong while enrolling! Please try again.");
       }
     } catch (error) {
       setIsEnrolling(false);
       setEnrollmentProgress(0);
-      alert("Something went wrong! Please try again.");
+      alert("Something went wrong while enrolling! Please try again.");
       console.error(error);
     }
   };

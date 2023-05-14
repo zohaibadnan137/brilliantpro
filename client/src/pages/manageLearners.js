@@ -13,6 +13,37 @@ function ManageLearners() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
+  const createUpdateAuditLog = async (fieldName, oldValue, newValue) => {
+    console.log("Creating audit log");
+    const auditLog = {
+      userId: JSON.parse(localStorage.getItem("user"))._id,
+      changeDate: new Date(),
+      entityName: "learner",
+      objectId: selectedLearner._id,
+      fieldName: fieldName,
+      oldValue: oldValue,
+      newValue: newValue,
+      operationType: "update",
+    };
+    try {
+      const response = await fetch("http://localhost:5000/audit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(auditLog),
+      });
+      if (response.ok) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  };
+
   useEffect(() => {
     getAllLearners();
   }, []);
@@ -68,6 +99,25 @@ function ManageLearners() {
         body: JSON.stringify(selectedLearner),
       });
       if (response.ok) {
+        const data = await response.json();
+
+        // Create an audit log
+        const auditLog = {
+          userId: JSON.parse(localStorage.getItem("user"))._id,
+          changeDate: new Date(),
+          entityName: "learner",
+          objectId: data.data._id,
+          fieldName: "N/A",
+          oldValue: "N/A",
+          newValue: "N/A",
+          operationType: "create",
+        };
+        const auditResponse = await fetch("http://localhost:5000/audit/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(auditLog),
+        });
+
         alert("Learner created successfully.");
         getAllLearners();
         handleModalClose();
@@ -83,6 +133,9 @@ function ManageLearners() {
 
   // Handler for editing a learner
   const handleLearnerEdit = async () => {
+    // Store the old learner
+    const oldLearner = selectedLearner;
+
     try {
       const response = await fetch(
         `http://localhost:5000/learner/${selectedLearner._id}`,
@@ -93,6 +146,36 @@ function ManageLearners() {
         }
       );
       if (response.ok) {
+        const data = await response.json();
+        console.log("New", data.data);
+        console.log("Old", oldLearner);
+
+        // Create audit logs
+        if (oldLearner.name !== data.data.name) {
+          await createUpdateAuditLog("name", oldLearner.name, data.data.name);
+        }
+        if (oldLearner.image !== data.data.image) {
+          await createUpdateAuditLog(
+            "image",
+            oldLearner.image,
+            data.data.image
+          );
+        }
+        if (oldLearner.email !== data.data.email) {
+          await createUpdateAuditLog(
+            "email",
+            oldLearner.email,
+            data.data.email
+          );
+        }
+        if (oldLearner.password !== data.data.password) {
+          await createUpdateAuditLog(
+            "password",
+            oldLearner.password,
+            data.data.password
+          );
+        }
+
         alert("Learner updated successfully.");
         getAllLearners();
         handleModalClose();
@@ -116,6 +199,25 @@ function ManageLearners() {
         }
       );
       if (response.ok) {
+        const data = await response.json();
+
+        // Create an audit log
+        const auditLog = {
+          userId: JSON.parse(localStorage.getItem("user"))._id,
+          changeDate: new Date(),
+          entityName: "learner",
+          objectId: data.data._id,
+          fieldName: "N/A",
+          oldValue: "N/A",
+          newValue: "N/A",
+          operationType: "delete",
+        };
+        const auditResponse = await fetch("http://localhost:5000/audit/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(auditLog),
+        });
+
         alert("Learner deleted successfully.");
         getAllLearners();
         handleModalClose();

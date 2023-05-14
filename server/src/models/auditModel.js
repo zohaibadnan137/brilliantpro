@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
 
 const auditSchema = new mongoose.Schema({
-  UserId: {
+  userId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
   },
-  ChangeDate: { type: Date, required: true },
-  EntityName: {
+  changeDate: { type: Date, required: true },
+  entityName: {
     type: String,
     enum: [
       "admin",
@@ -20,13 +20,13 @@ const auditSchema = new mongoose.Schema({
     ],
     required: true,
   },
-  ObjectId: { type: mongoose.Schema.Types.ObjectId, required: true },
-  FieldName: { type: String, required: true },
-  OldValue: { type: String, required: true },
-  NewValue: { type: String, required: true },
-  OperationType: {
+  objectId: { type: mongoose.Schema.Types.ObjectId, required: true },
+  fieldName: { type: String, required: true },
+  oldValue: { type: String, required: true },
+  newValue: { type: String, required: true },
+  operationType: {
     type: String,
-    enum: ["create", "retrieve", "update", "delete"],
+    enum: ["create", "update", "delete"],
     required: true,
   },
 });

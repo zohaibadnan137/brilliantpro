@@ -14,6 +14,37 @@ function MyProfile() {
   const [newLastName, setNewLastName] = useState("");
   const [newEmail, setNewEmail] = useState("");
 
+  const createAuditLog = async (entityName, fieldName, oldValue, newValue) => {
+    const auditLog = {
+      userId: user._id,
+      changeDate: new Date(),
+      entityName: entityName,
+      objectId: user._id,
+      fieldName: fieldName,
+      oldValue: oldValue,
+      newValue: newValue,
+      operationType: "update",
+    };
+
+    try {
+      const response = await fetch("http://localhost:5000/audit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(auditLog),
+      });
+      if (response.ok) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  };
+
   const handleSignOut = () => {
     localStorage.removeItem("user");
     window.dispatchEvent(new Event("logout"));
@@ -28,6 +59,9 @@ function MyProfile() {
   };
 
   const handleSaveClick = async () => {
+    // Save the old learner
+    const oldLearner = user;
+
     try {
       const response = await fetch(
         `http://localhost:5000/learner/${user._id}`,
@@ -42,10 +76,36 @@ function MyProfile() {
           }),
         }
       );
+
       if (response.ok) {
         const data = await response.json();
         localStorage.setItem("user", JSON.stringify(data.data));
         setUser(data.data);
+
+        // Create audit logs
+        if (oldLearner.name !== data.data.name) {
+          const auditLog = await createAuditLog(
+            "learner",
+            "name",
+            oldLearner.name,
+            data.data.name
+          );
+          if (!auditLog) {
+            alert("Something went wrong! Please try again.");
+          }
+        }
+        if (oldLearner.email !== data.data.email) {
+          const auditLog = await createAuditLog(
+            "learner",
+            "email",
+            oldLearner.email,
+            data.data.email
+          );
+          if (!auditLog) {
+            alert("Something went wrong! Please try again.");
+          }
+        }
+
         alert("Profile updated!");
         setIsModalOpen(false);
       } else {

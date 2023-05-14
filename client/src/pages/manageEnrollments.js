@@ -124,6 +124,27 @@ function ManageEnrollments() {
         body: JSON.stringify(enrollment),
       });
       if (response.ok) {
+        const data = await response.json();
+
+        // Create an audit log
+        const auditLog = {
+          userId: JSON.parse(localStorage.getItem("user"))._id,
+          changeDate: new Date(),
+          entityName: "enrollment",
+          objectId: data.data._id,
+          fieldName: "N/A",
+          oldValue: "N/A",
+          newValue: "N/A",
+          operationType: "create",
+        };
+        const auditResponse = await fetch("http://localhost:5000/audit", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(auditLog),
+        });
+
         alert("Enrollment created successfully.");
         getAllEnrollments();
         handleModalClose();
@@ -139,6 +160,7 @@ function ManageEnrollments() {
 
   // Handler for editing an enrollment
   const handleEnrollmentEdit = async () => {
+    const oldEnrollment = selectedEnrollment;
     const updatedEnrollment = {
       learnerId: selectedLearnerId,
       courseId: selectedCourseId,
@@ -155,6 +177,27 @@ function ManageEnrollments() {
         }
       );
       if (response.ok) {
+        const data = await response.json();
+
+        // Create an audit log
+        const auditLog = {
+          userId: JSON.parse(localStorage.getItem("user"))._id,
+          changeDate: new Date(),
+          entityName: "enrollment",
+          objectId: selectedEnrollment._id,
+          fieldName: "courseId",
+          oldValue: oldEnrollment.courseId,
+          newValue: data.data.courseId,
+          operationType: "update",
+        };
+        const auditResponse = await fetch("http://localhost:5000/audit", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(auditLog),
+        });
+
         alert("Enrollment updated successfully.");
         getAllEnrollments();
         handleModalClose();
@@ -178,6 +221,27 @@ function ManageEnrollments() {
         }
       );
       if (response.ok) {
+        const data = await response.json();
+
+        // Create an audit log
+        const auditLog = {
+          userId: JSON.parse(localStorage.getItem("user"))._id,
+          changeDate: new Date(),
+          entityName: "enrollment",
+          objectId: selectedEnrollment._id,
+          fieldName: "N/A",
+          oldValue: "N/A",
+          newValue: "N/A",
+          operationType: "delete",
+        };
+        const auditResponse = await fetch("http://localhost:5000/audit", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(auditLog),
+        });
+
         alert("Enrollment deleted successfully.");
         getAllEnrollments();
         handleModalClose();

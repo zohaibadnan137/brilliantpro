@@ -19,6 +19,36 @@ function ManageCourses() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
+  const createUpdateAuditLog = async (fieldName, oldValue, newValue) => {
+    const auditLog = {
+      userId: JSON.parse(localStorage.getItem("user"))._id,
+      changeDate: new Date(),
+      entityName: "course",
+      objectId: selectedCourse._id,
+      fieldName: fieldName,
+      oldValue: oldValue,
+      newValue: newValue,
+      operationType: "update",
+    };
+    try {
+      const response = await fetch("http://localhost:5000/audit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(auditLog),
+      });
+      if (response.ok) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  };
+
   useEffect(() => {
     getAllCourses();
   }, []);
@@ -85,6 +115,28 @@ function ManageCourses() {
         body: JSON.stringify(selectedCourse),
       });
       if (response.ok) {
+        const data = await response.json();
+
+        // Create an audit log
+        const auditLog = {
+          userId: JSON.parse(localStorage.getItem("user"))._id,
+          changeDate: new Date(),
+          entityName: "course",
+          objectId: data.data._id,
+          fieldName: "N/A",
+          oldValue: "N/A",
+          newValue: "N/A",
+          operationType: "create",
+        };
+
+        const auditResponse = await fetch("http://localhost:5000/audit", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(auditLog),
+        });
+
         alert("Course created successfully.");
         getAllCourses();
         handleModalClose();
@@ -100,6 +152,9 @@ function ManageCourses() {
 
   // Handler for editing a course
   const handleCourseEdit = async () => {
+    // Store the old course
+    const oldCourse = selectedCourse;
+
     try {
       const response = await fetch(
         `http://localhost:5000/course/${selectedCourse._id}`,
@@ -110,6 +165,58 @@ function ManageCourses() {
         }
       );
       if (response.ok) {
+        const data = await response.json();
+
+        // Create audit logs
+        if (oldCourse.title !== data.data.title) {
+          await createUpdateAuditLog("title", oldCourse.title, data.data.title);
+        }
+        if (oldCourse.overview !== data.data.overview) {
+          await createUpdateAuditLog(
+            "overview",
+            oldCourse.overview,
+            data.data.overview
+          );
+        }
+        if (oldCourse.description !== data.data.description) {
+          await createUpdateAuditLog(
+            "description",
+            oldCourse.description,
+            data.data.description
+          );
+        }
+        if (oldCourse.syllabus !== data.data.syllabus) {
+          await createUpdateAuditLog(
+            "syllabus",
+            JSON.stringify(oldCourse.syllabus),
+            JSON.stringify(data.data.syllabus)
+          );
+        }
+        if (oldCourse.image !== data.data.image) {
+          await createUpdateAuditLog("image", oldCourse.image, data.data.image);
+        }
+        if (oldCourse.deadline.start !== data.data.deadline.start) {
+          await createUpdateAuditLog(
+            "deadline.start",
+            oldCourse.deadline.start,
+            data.data.deadline.start
+          );
+        }
+        if (oldCourse.deadline.end !== data.data.deadline.end) {
+          await createUpdateAuditLog(
+            "deadline.end",
+            oldCourse.deadline.end,
+            data.data.deadline.end
+          );
+        }
+        if (oldCourse.enrollmentLink !== data.data.enrollmentLink) {
+          await createUpdateAuditLog(
+            "enrollmentLink",
+            oldCourse.enrollmentLink,
+            data.data.enrollmentLink
+          );
+        }
+
         alert("Course updated successfully.");
         getAllCourses();
         handleModalClose();
@@ -133,6 +240,27 @@ function ManageCourses() {
         }
       );
       if (response.ok) {
+        const data = await response.json();
+
+        // Create an audit log
+        const auditLog = {
+          userId: JSON.parse(localStorage.getItem("user"))._id,
+          changeDate: new Date(),
+          entityName: "course",
+          objectId: data.data._id,
+          fieldName: "N/A",
+          oldValue: "N/A",
+          newValue: "N/A",
+          operationType: "delete",
+        };
+        const auditResponse = await fetch("http://localhost:5000/audit", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(auditLog),
+        });
+
         alert("Course deleted successfully.");
         getAllCourses();
         handleModalClose();
