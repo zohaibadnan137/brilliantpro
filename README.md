@@ -1,5 +1,5 @@
 # BrilliantPro
-BrilliantPro is a learning management system created using the MERN stack. 
+BrilliantPro is a learning management system created using the MERN stack.
 
 ## Try it out!
 Clone the repository to your machine. 
@@ -10,6 +10,10 @@ Open a terminal window, and navigate to the ```server``` directory. Install the 
 ```
 cd server
 npm install
+```
+Create a ```.env``` file in this directory and add your MongoDB connection string.
+```
+MONGODB_URI=<your_connection_string>
 ```
 Start the server.
 ```
