@@ -1,5 +1,5 @@
 # BrilliantPro
-BrilliantPro is a learning management system created using the MERN stack.
+BrilliantPro is a learning management system created using the MERN stack and Bulma CSS.
 
 https://github.com/zohaibadnan137/brilliantpro/assets/82387424/a2147914-0e8d-41eb-abf5-c9c97296015d
 
