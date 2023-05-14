@@ -1,6 +1,8 @@
 # BrilliantPro
 BrilliantPro is a learning management system created using the MERN stack.
 
+https://github.com/zohaibadnan137/brilliantpro/assets/82387424/a2147914-0e8d-41eb-abf5-c9c97296015d
+
 ## Try it out!
 Clone the repository to your machine. 
 ```
