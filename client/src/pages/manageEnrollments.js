@@ -29,7 +29,7 @@ function ManageEnrollments() {
 
   const getAllEnrollments = async () => {
     try {
-      const response = await fetch("http://localhost:5000/enrollment/all");
+      const response = await fetch("http://localhost:5001/enrollment/all");
       if (response.ok) {
         const data = await response.json();
         setEnrollments(data.data);
@@ -41,7 +41,7 @@ function ManageEnrollments() {
 
   const getAllCourses = async () => {
     try {
-      const response = await fetch("http://localhost:5000/course/all");
+      const response = await fetch("http://localhost:5001/course/all");
       if (response.ok) {
         const data = await response.json();
         setCourses(data.data);
@@ -53,7 +53,7 @@ function ManageEnrollments() {
 
   const getAllLearners = async () => {
     try {
-      const response = await fetch("http://localhost:5000/learner/all");
+      const response = await fetch("http://localhost:5001/learner/all");
       if (response.ok) {
         const data = await response.json();
         setLearners(data.data);
@@ -67,7 +67,7 @@ function ManageEnrollments() {
     const fetchAvailableCourses = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5000/learner-course/not-enrolled/${selectedLearnerId}`
+          `http://localhost:5001/learner-course/not-enrolled/${selectedLearnerId}`
         );
         if (response.ok) {
           const data = await response.json();
@@ -116,7 +116,7 @@ function ManageEnrollments() {
       courseId: selectedCourseId,
     };
     try {
-      const response = await fetch("http://localhost:5000/enrollment", {
+      const response = await fetch("http://localhost:5001/enrollment", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -137,7 +137,7 @@ function ManageEnrollments() {
           newValue: "N/A",
           operationType: "create",
         };
-        const auditResponse = await fetch("http://localhost:5000/audit", {
+        const auditResponse = await fetch("http://localhost:5001/audit", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -167,7 +167,7 @@ function ManageEnrollments() {
     };
     try {
       const response = await fetch(
-        `http://localhost:5000/enrollment/${selectedEnrollment._id}`,
+        `http://localhost:5001/enrollment/${selectedEnrollment._id}`,
         {
           method: "PUT",
           headers: {
@@ -190,7 +190,7 @@ function ManageEnrollments() {
           newValue: data.data.courseId,
           operationType: "update",
         };
-        const auditResponse = await fetch("http://localhost:5000/audit", {
+        const auditResponse = await fetch("http://localhost:5001/audit", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -215,7 +215,7 @@ function ManageEnrollments() {
   const handleEnrollmentDelete = async () => {
     try {
       const response = await fetch(
-        `http://localhost:5000/enrollment/${selectedEnrollment._id}`,
+        `http://localhost:5001/enrollment/${selectedEnrollment._id}`,
         {
           method: "DELETE",
         }
@@ -234,7 +234,7 @@ function ManageEnrollments() {
           newValue: "N/A",
           operationType: "delete",
         };
-        const auditResponse = await fetch("http://localhost:5000/audit", {
+        const auditResponse = await fetch("http://localhost:5001/audit", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

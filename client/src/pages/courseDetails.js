@@ -57,7 +57,7 @@ function CourseDetails(props) {
     };
 
     try {
-      const response = await fetch("http://localhost:5000/enrollment", {
+      const response = await fetch("http://localhost:5001/enrollment", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -79,7 +79,7 @@ function CourseDetails(props) {
           newValue: "N/A",
           operationType: "create",
         };
-        const auditResponse = await fetch("http://localhost:5000/audit", {
+        const auditResponse = await fetch("http://localhost:5001/audit", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

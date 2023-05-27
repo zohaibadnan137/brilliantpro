@@ -31,7 +31,7 @@ function ManageCourses() {
       operationType: "update",
     };
     try {
-      const response = await fetch("http://localhost:5000/audit", {
+      const response = await fetch("http://localhost:5001/audit", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -55,7 +55,7 @@ function ManageCourses() {
 
   const getAllCourses = async () => {
     try {
-      const response = await fetch("http://localhost:5000/course/all");
+      const response = await fetch("http://localhost:5001/course/all");
       if (response.ok) {
         const data = await response.json();
         setCourses(data.data);
@@ -109,7 +109,7 @@ function ManageCourses() {
   // Handler for creating a course
   const handleCourseCreate = async () => {
     try {
-      const response = await fetch("http://localhost:5000/course", {
+      const response = await fetch("http://localhost:5001/course", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(selectedCourse),
@@ -129,7 +129,7 @@ function ManageCourses() {
           operationType: "create",
         };
 
-        const auditResponse = await fetch("http://localhost:5000/audit", {
+        const auditResponse = await fetch("http://localhost:5001/audit", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -157,7 +157,7 @@ function ManageCourses() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/course/${selectedCourse._id}`,
+        `http://localhost:5001/course/${selectedCourse._id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -234,7 +234,7 @@ function ManageCourses() {
   const handleCourseDelete = async () => {
     try {
       const response = await fetch(
-        `http://localhost:5000/course/${selectedCourse._id}`,
+        `http://localhost:5001/course/${selectedCourse._id}`,
         {
           method: "DELETE",
         }
@@ -253,7 +253,7 @@ function ManageCourses() {
           newValue: "N/A",
           operationType: "delete",
         };
-        const auditResponse = await fetch("http://localhost:5000/audit", {
+        const auditResponse = await fetch("http://localhost:5001/audit", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

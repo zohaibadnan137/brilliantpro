@@ -26,7 +26,7 @@ function ManageLearners() {
       operationType: "update",
     };
     try {
-      const response = await fetch("http://localhost:5000/audit", {
+      const response = await fetch("http://localhost:5001/audit", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -50,7 +50,7 @@ function ManageLearners() {
 
   const getAllLearners = async () => {
     try {
-      const response = await fetch("http://localhost:5000/learner/all");
+      const response = await fetch("http://localhost:5001/learner/all");
       if (response.ok) {
         const data = await response.json();
         setLearners(data.data);
@@ -93,7 +93,7 @@ function ManageLearners() {
   // Handler for creating a learner
   const handleLearnerCreate = async () => {
     try {
-      const response = await fetch("http://localhost:5000/learner/", {
+      const response = await fetch("http://localhost:5001/learner/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(selectedLearner),
@@ -112,7 +112,7 @@ function ManageLearners() {
           newValue: "N/A",
           operationType: "create",
         };
-        const auditResponse = await fetch("http://localhost:5000/audit/", {
+        const auditResponse = await fetch("http://localhost:5001/audit/", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(auditLog),
@@ -138,7 +138,7 @@ function ManageLearners() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/learner/${selectedLearner._id}`,
+        `http://localhost:5001/learner/${selectedLearner._id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -193,7 +193,7 @@ function ManageLearners() {
   const handleLearnerDelete = async () => {
     try {
       const response = await fetch(
-        `http://localhost:5000/learner/${selectedLearner._id}`,
+        `http://localhost:5001/learner/${selectedLearner._id}`,
         {
           method: "DELETE",
         }
@@ -212,7 +212,7 @@ function ManageLearners() {
           newValue: "N/A",
           operationType: "delete",
         };
-        const auditResponse = await fetch("http://localhost:5000/audit/", {
+        const auditResponse = await fetch("http://localhost:5001/audit/", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(auditLog),

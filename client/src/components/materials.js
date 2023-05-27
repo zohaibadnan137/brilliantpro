@@ -18,7 +18,7 @@ function Materials(props) {
     () => async () => {
       try {
         const response = await fetch(
-          `http://localhost:5000/material/for-course/${course._id}`
+          `http://localhost:5001/material/for-course/${course._id}`
         );
         if (response.ok) {
           const data = await response.json();

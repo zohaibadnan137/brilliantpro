@@ -14,7 +14,7 @@ function SignupPage() {
     event.preventDefault();
     const fullName = firstName + " " + lastName;
     try {
-      const response = await fetch("http://localhost:5000/auth/signup", {
+      const response = await fetch("http://localhost:5001/auth/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -40,7 +40,7 @@ function SignupPage() {
           newValue: "N/A",
           operationType: "create",
         };
-        const auditResponse = await fetch("http://localhost:5000/audit", {
+        const auditResponse = await fetch("http://localhost:5001/audit", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

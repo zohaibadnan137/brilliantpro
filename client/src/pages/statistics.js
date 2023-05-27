@@ -12,7 +12,7 @@ function Statistics() {
   const fetchStatistics = async () => {
     // Get all the courses
     try {
-      const response = await fetch("http://localhost:5000/course/all");
+      const response = await fetch("http://localhost:5001/course/all");
       if (response.ok) {
         const data = await response.json();
         setCourseCount(data.data.length);
@@ -22,7 +22,7 @@ function Statistics() {
     }
     // Get all the learners
     try {
-      const response = await fetch("http://localhost:5000/learner/all");
+      const response = await fetch("http://localhost:5001/learner/all");
       if (response.ok) {
         const data = await response.json();
         setLearnerCount(data.data.length);
@@ -32,7 +32,7 @@ function Statistics() {
     }
     // Get all the enrollments
     try {
-      const response = await fetch("http://localhost:5000/enrollment/all");
+      const response = await fetch("http://localhost:5001/enrollment/all");
       if (response.ok) {
         const data = await response.json();
         setEnrollmentCount(data.data.length);

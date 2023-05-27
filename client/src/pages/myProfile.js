@@ -27,7 +27,7 @@ function MyProfile() {
     };
 
     try {
-      const response = await fetch("http://localhost:5000/audit", {
+      const response = await fetch("http://localhost:5001/audit", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -64,7 +64,7 @@ function MyProfile() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/learner/${user._id}`,
+        `http://localhost:5001/learner/${user._id}`,
         {
           method: "PUT",
           headers: {

@@ -17,7 +17,7 @@ function MyCourses(props) {
     () => async () => {
       try {
         const response = await fetch(
-          `http://localhost:5000/learner-course/enrolled/${learner._id}`
+          `http://localhost:5001/learner-course/enrolled/${learner._id}`
         );
         if (response.ok) {
           const data = await response.json();
